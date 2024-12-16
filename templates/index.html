@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>index</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <script src="{%static 'js/main.js' %}"></script>
+</head>
+<body>
+    <h1>home page</h1>
+    <a href="{% url 'products' %}">product</a>
+</body>
+</html>
