@@ -17,7 +17,6 @@ from django.conf.global_settings import STATICFILES_FINDERS, STATICFILES_DIRS
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
@@ -29,6 +28,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+# AUTH_USER_MODEL = 'subjectPython.User'
 
 # Application definition
 
@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'subjectPython'
 ]
 
 MIDDLEWARE = [
@@ -71,17 +72,22 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'subjectPython.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'mssql',  # Engine cho SQL Server
+        'NAME': 'qlbh',  # Tên database bạn muốn kết nối
+        'USER': 'sa',  # Tài khoản SQL Server
+        'PASSWORD': 'sql@12345678',  # Mật khẩu
+        'HOST': 'localhost',  # Địa chỉ server
+        'PORT': 1433,  # Có thể để trống (sử dụng cổng mặc định 1433)
+        'OPTIONS': {
+            'driver': 'ODBC Driver 17 for SQL Server',  # Driver ODBC (cài đặt sẵn)
+        },
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
@@ -101,7 +107,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/5.1/topics/i18n/
 
@@ -112,7 +117,6 @@ TIME_ZONE = 'UTC'
 USE_I18N = True
 
 USE_TZ = True
-
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
@@ -126,3 +130,24 @@ STATICFILES_DIRS = [
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# Đảm bảo rằng SESSION_ENGINE được thiết lập để sử dụng cơ sở dữ liệu để lưu session
+SESSION_ENGINE = 'django.contrib.sessions.backends.db'  # Lưu session vào database
+
+# Session sẽ hết hạn sau khoảng thời gian này (mặc định 300 giây = 5 phút)
+SESSION_COOKIE_AGE = 300  # thời gian tính bằng giây
+
+# Lưu trữ session trong cookie
+SESSION_COOKIE_NAME = 'sessionid'
+
+# Tên miền của cookie (nếu bạn cần tùy chỉnh)
+SESSION_COOKIE_DOMAIN = None
+
+# Đảm bảo session không thể truy cập được qua JavaScript
+SESSION_COOKIE_HTTPONLY = False
+
+# Nếu bạn muốn session hết hạn khi người dùng đóng trình duyệt
+SESSION_EXPIRE_AT_BROWSER_CLOSE = False
+
+# Cấu hình xem session có được giữ lại khi người dùng không hoạt động
+SESSION_SAVE_EVERY_REQUEST = True

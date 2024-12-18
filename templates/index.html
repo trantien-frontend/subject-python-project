@@ -1,14 +1,65 @@
-<!DOCTYPE html>
+{% extends 'base.html' %}
 {% load static %}
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>index</title>
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
-    <script src="{%static 'js/main.js' %}"></script>
-</head>
-<body>
-    <h1>home page</h1>
-    <a href="{% url 'products' %}">product</a>
-</body>
-</html>
+{% block title %}Home{% endblock %}
+{% block head %}
+<!--swiper-slider-->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
+{% endblock %}
+{% block content %}
+
+<div class="wrapper">
+    <!-- hero section-->
+    <section class="hero-section">
+        <div class="container">
+            <div class="swiper">
+                <div class="swiper-wrapper">
+                    <!-- Slides -->
+                    <div class="swiper-slide">
+                        <img src="https://laptop88.vn/media/banner/747x350-Lenovo-LOQ-sua-gia.jpg">
+                    </div>
+                    <div class="swiper-slide">
+                        <img src="https://laptop88.vn/media/banner/747x350-Lenovo-LOQ-sua-gia.jpg">
+                    </div>
+                    <div class="swiper-slide">
+                        <img src="https://laptop88.vn/media/banner/747x350-Lenovo-LOQ-sua-gia.jpg">
+                    </div>
+                </div>
+                <div class="swiper-pagination"></div>
+                <!-- If we need navigation buttons -->
+                <div class="swiper-button-prev"></div>
+                <div class="swiper-button-next"></div>
+                <!-- If we need scrollbar -->
+                <div class="swiper-scrollbar"></div>
+            </div>
+        </div>
+    </section>
+    <!-- list samsung -->
+    <section class="samsung-product">
+        <h3 class="section-title">SamSung</h3>
+        <div class="container">
+            <div class="row">
+                {% for ss_product in ss_products %}
+                <div class="col-lg-2">
+                    <div class="box box--ss">
+                        <div class="box-image">
+                            <img src="https://cdn.tgdd.vn/Products/Images/42/307174/samsung-galaxy-s24-ultra-grey-thumbnew-600x600.jpg">
+                        </div>
+                        <div class="box-content">
+                            <h4 class="box-name">{{ss_product.name}}</h4>
+                            <h5 class="box-price">{{ss_product.price}}</h5>
+                        </div>
+                        <div class="box-button">
+                            <button>Thêm vào giỏ hàng</button>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+</div>
+{% endblock %}
+{% block javascript %}
+<script src="{%static 'js/home.js' %}" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js" defer></script>
+{% endblock %}
