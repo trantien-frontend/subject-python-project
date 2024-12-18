@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Register{% endblock %}
+{% block head %}{% endblock %}
+{% block content %}
+<section class="register">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-4">
+                <div class="box">
+                    <form method="post" id="register-form">
+                        {% csrf_token %}
+                        <div class="mb-3 form-header">
+                            <h3>Đăng ký</h3>
+                        </div>
+                        <div class="form-body">
+                            <div class="mb-3">
+                                <label for="input-firstName" class="form-label">Họ <span
+                                        class="text-danger">*</span></label>
+                                <input type="text" class="form-control p-2" id="input-firstname" name="firstname">
+                                <span class="form-error text-danger"></span>
+                            </div>
+                            <div class="mb-3">
+                                <label for="input-lastname" class="form-label">Tên <span
+                                        class="text-danger">*</span></label>
+                                <input type="text" class="form-control p-2" id="input-lastname" name="lastname">
+                                <span class="form-error text-danger"></span>
+                            </div>
+                            <div class="mb-3">
+                                <label for="input-email" class="form-label">Email <span
+                                        class="text-danger">*</span></label>
+                                <input type="email" class="form-control p-2" id="input-email" name="email">
+                                <span class="form-error text-danger"></span>
+                            </div>
+                            <div class="mb-3">
+                                <label for="input-password" class="form-label">Mật khẩu <span
+                                        class="text-danger">*</span></label>
+                                <input type="password" class="form-control p-2" id="input-password" name="password">
+                                <span class="form-error text-danger"></span>
+                            </div>
+                            <div class="mb-3">
+                                <label for="input-confirm-password" class="form-label">Xác nhận mật khẩu <span
+                                        class="text-danger">*</span></label>
+                                <input type="password" class="form-control p-2" id="input-confirm-password"
+                                       name="confirm-password">
+                                <span class="form-error text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="form-footer mb-3">
+                            <button type="submit">Đăng ký</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+{% block javascript%}
+<script src="{%static 'js/register.js' %}" defer></script>
+{% endblock %}
