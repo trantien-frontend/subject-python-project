@@ -10,7 +10,13 @@ from .models import Product
 # view home_page
 def home_page(request):
     ss_products = Product.objects.filter(brand=1).order_by('-id')[:6]
+    print("Debug ss_products:")
+    for product in ss_products:
+        print(f"ID: {product.id}, Name: {product.name}, Price: {product.price}")
     return render(request, 'index.html', {"ss_products": ss_products})
+
+def cart_page(request):
+    return render(request, 'cart.html')
 
 
 # view register

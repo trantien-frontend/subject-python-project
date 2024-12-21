@@ -78,7 +78,7 @@ WSGI_APPLICATION = 'subjectPython.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'mssql',  # Engine cho SQL Server
-        'NAME': 'qlbh',  # Tên database bạn muốn kết nối
+        'NAME': 'quan_ly_ban_hang',  # Tên database bạn muốn kết nối
         'USER': 'sa',  # Tài khoản SQL Server
         'PASSWORD': 'sql@12345678',  # Mật khẩu
         'HOST': 'localhost',  # Địa chỉ server

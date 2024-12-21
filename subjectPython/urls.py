@@ -27,4 +27,5 @@ urlpatterns = [
     path("login/", views.handle_login),
     path("register-form/", views.register_form),
     path("register/",views.handle_register),
+    path("cart/",views.cart_page),
 ]
