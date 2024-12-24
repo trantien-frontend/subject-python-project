@@ -5,6 +5,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.hashers import make_password, check_password
 
 from .models import Product
+from django.shortcuts import get_object_or_404
 
 
 # view home_page
@@ -68,3 +69,48 @@ def product_page(request):
 
 def product_detail_page(request):
     return render(request, 'product-details.html')
+
+from django.http import JsonResponse
+
+def add_to_cart(request):
+    if request.method == 'POST':
+        product_id = request.POST.get('product_id')  # Lấy `product_id` từ yêu cầu POST
+        if not product_id:
+            return JsonResponse({'success': False, 'message': 'Invalid product ID.'})
+
+        # Lấy session giỏ hàng
+        cart = request.session.get('cart', {})
+        
+        # Tăng số lượng sản phẩm nếu đã tồn tại trong giỏ
+        if product_id in cart:
+            cart[product_id] += 1
+        else:
+            cart[product_id] = 1
+
+        # Lưu lại giỏ hàng vào session
+        request.session['cart'] = cart
+
+        print("Giỏ hàng hiện tại:", cart)
+
+        return JsonResponse({'success': True, 'message': 'Product added to cart.'})
+
+    return JsonResponse({'success': False, 'message': 'Invalid request method.'})
+
+def cart(request):
+    # Lấy giỏ hàng từ session (mỗi phần tử là product_id và quantity)
+    cart = request.session.get('cart', {})
+
+    # Tạo danh sách các sản phẩm chi tiết trong giỏ hàng
+    cart_items = []
+
+    # Lặp qua từng sản phẩm trong giỏ hàng để lấy thông tin chi tiết
+    for product_id, quantity in cart.items():
+        product = get_object_or_404(Product, id=product_id)  # Lấy sản phẩm từ DB theo product_id
+        cart_items.append({
+            'product': product,
+            'quantity': quantity,
+            'total_price': product.price * quantity  # Tính tổng giá cho sản phẩm
+        })
+        total_price = product.price * quantity
+
+    return render(request, 'cart.html', {'cart_items': cart_items, 'total_price': total_price})
