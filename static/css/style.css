@@ -24,6 +24,7 @@ body {
     font-size: 12px;
     font-family: Arial, sans-serif;
     color: var(--text);
+    background-color: var(--background-color);
 }
 
 img {
@@ -35,6 +36,7 @@ img {
     --primary: #65C3DB;
     --text: #1d2939;
     --text-hover: #288ad6;
+    --background-color: #eff3f6
 }
 
 .navbar {
@@ -171,5 +173,16 @@ nav {
     }
 }
 
+header {
+    background-color: #fff;
+}
 
+.page-title {
+    font-size: 21px;
+}
 
+hr {
+    color: #79797a;
+    opacity: 0.15;
+    border-top: 1.6px solid;
+}

@@ -1,10 +1,10 @@
+import json
 from django.contrib.auth import login
 from django.contrib.auth.models import User
 from django.http import JsonResponse
 from django.shortcuts import render, redirect
 from django.contrib.auth.hashers import make_password, check_password
-
-from .models import Product
+from .models import OrderDetail, Order, Product
 from django.shortcuts import get_object_or_404
 
 
@@ -70,24 +70,19 @@ def product_page(request):
 def product_detail_page(request):
     return render(request, 'product-details.html')
 
-from django.http import JsonResponse
-
 def add_to_cart(request):
     if request.method == 'POST':
-        product_id = request.POST.get('product_id')  # Lấy `product_id` từ yêu cầu POST
+        product_id = request.POST.get('product_id')
         if not product_id:
             return JsonResponse({'success': False, 'message': 'Invalid product ID.'})
 
-        # Lấy session giỏ hàng
         cart = request.session.get('cart', {})
-        
-        # Tăng số lượng sản phẩm nếu đã tồn tại trong giỏ
+
         if product_id in cart:
             cart[product_id] += 1
         else:
             cart[product_id] = 1
 
-        # Lưu lại giỏ hàng vào session
         request.session['cart'] = cart
 
         print("Giỏ hàng hiện tại:", cart)
@@ -97,20 +92,60 @@ def add_to_cart(request):
     return JsonResponse({'success': False, 'message': 'Invalid request method.'})
 
 def cart(request):
-    # Lấy giỏ hàng từ session (mỗi phần tử là product_id và quantity)
     cart = request.session.get('cart', {})
 
-    # Tạo danh sách các sản phẩm chi tiết trong giỏ hàng
     cart_items = []
+    total_price = 0
 
-    # Lặp qua từng sản phẩm trong giỏ hàng để lấy thông tin chi tiết
     for product_id, quantity in cart.items():
-        product = get_object_or_404(Product, id=product_id)  # Lấy sản phẩm từ DB theo product_id
+        product = get_object_or_404(Product, id=product_id)
         cart_items.append({
             'product': product,
             'quantity': quantity,
-            'total_price': product.price * quantity  # Tính tổng giá cho sản phẩm
+            'price': product.price,
+            'total_price': product.price * quantity
         })
-        total_price = product.price * quantity
+        total_price += product.price * quantity
 
     return render(request, 'cart.html', {'cart_items': cart_items, 'total_price': total_price})
+
+def handle_order(request):
+    if request.method == 'POST':
+        data = json.loads(request.body)
+
+        user_id = 1
+        status_id = 1
+        shipping_address = data.get('address')
+        shipping_price = 0
+        is_delivered = True
+        products = data.get('products', [])
+
+        order = Order.objects.create(
+            user_id=user_id,
+            status_id=status_id,
+            shipping_address=shipping_address,
+            shipping_price=shipping_price,
+            is_delivered=is_delivered
+        )
+
+        for detail in products:
+            product_id = detail.get('productId')
+            quantity = detail.get('quantity')
+
+            OrderDetail.objects.create(
+                order=order,
+                product_id=product_id,
+                quantity=quantity
+            )
+
+        response_data = {
+            "order_id": order.id,
+            "user_id": order.user_id,
+            "status_id": order.status_id,
+            "shipping_address": order.shipping_address,
+            "shipping_price": order.shipping_price,
+            "is_delivered": order.is_delivered,
+            "details": [{"product_id": detail.product_id, "quantity": detail.quantity} for detail in order.details.all()]
+        }
+
+        return JsonResponse({'data': response_data})

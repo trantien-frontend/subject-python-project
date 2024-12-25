@@ -1,151 +1,82 @@
-
-.title {
-  margin-bottom: 5vh;
-}
-
 .cart-container {
-  margin-top: 70px;
-}
+  .cart-item {
+    max-height: 350px;
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
 
-.card {
-  border-radius: 1rem;
-  border: transparent;
-}
+  .img {
+    width: 60px;
+    height: auto;
+  }
 
-.cart {
-  background-color: #fff;
-  padding: 4vh 5vh;
-  border-bottom-left-radius: 1rem;
-  border-top-left-radius: 1rem;
-}
+  input {
+    height: 35px;
+    border-radius: 5px;
+    font-size: 12px;
+  }
 
-.summary {
-  background-color: #ddd;
-  border-top-right-radius: 1rem;
-  border-bottom-right-radius: 1rem;
-  padding: 4vh;
-  color: rgb(65, 65, 65);
-}
+  input::placeholder {
+    font-size: 12px;
+    opacity: 0.5;
+  }
 
-.summary .col-2 {
-  padding: 0;
-}
+  .city {
+    width: 130px;
+  }
 
-.summary .col-10 {
-  padding: 0;
-}
+  .card {
+    border-radius: 1rem;
+    border: transparent;
+  }
 
-.row {
-  margin: 0;
-}
+  .cart-info {
+    border-radius: 5px;
+    background-color: #ffd28d;
+  }
 
-.title b {
-  font-size: 1.5rem;
-}
+  .check-out {
+    border-radius: 10px;
+    height: 35px;
+    font-weight: 700;
+    font-size: 15px;
+  }
 
-.main {
-  margin: 0;
-  padding: 2vh 0;
-  width: 100%;
-}
+  .cart-info-item div {
+    margin: 0;
+  }
 
-.col-2,
-.col {
-  padding: 0 1vh;
-}
+  .quantity{
+    input {
+      width: 45px;
+      text-align: center;
+      border-color: #c6c5c5;
+    }
 
-a {
-  padding: 0 1vh;
-}
+    input[type=number]::-webkit-inner-spin-button {
+      opacity: 1;
+    }
+  }
 
-.close {
-  margin-left: auto;
-  font-size: 0.7rem;
-}
+  .cart-items {
+    max-height: 318px;
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
 
-img {
-  width: 3.5rem;
-}
-.back-to-shop {
-  margin-top: 4.5rem;
-}
-
-h5 {
-  margin-top: 4vh;
-}
-
-hr {
-  margin-top: 1.25rem;
-}
-
-form {
-  padding: 2vh 0;
-}
-
-select {
-  border: 1px solid rgba(0, 0, 0, 0.137);
-  padding: 1.5vh 1vh;
-  margin-bottom: 4vh;
-  outline: none;
-  width: 100%;
-  background-color: rgb(247, 247, 247);
-}
-
-input {
-  border: 1px solid rgba(0, 0, 0, 0.137);
-  padding: 1vh;
-  margin-bottom: 4vh;
-  outline: none;
-  width: 100%;
-  background-color: rgb(247, 247, 247);
-}
-
-input:focus::-webkit-input-placeholder {
-  color: transparent;
-}
-
-.btn {
-  background-color: #000;
-  border-color: #000;
-  color: white;
-  width: 100%;
-  font-size: 0.7rem;
-  margin-top: 4vh;
-  padding: 1vh;
-  border-radius: 0;
-}
-
-.btn:focus {
-  box-shadow: none;
-  outline: none;
-  box-shadow: none;
-  color: white;
-  -webkit-box-shadow: none;
-  -webkit-user-select: none;
-  transition: none;
-}
-
-.btn:hover {
-  color: white;
-}
-
-a {
-  color: black;
-}
-
-a:hover {
-  color: black;
-  text-decoration: none;
-}
-
-#code {
-  background-image: linear-gradient(
-      to left,
-      rgba(255, 255, 255, 0.253),
-      rgba(255, 255, 255, 0.185)
-    ),
-    url("https://img.icons8.com/small/16/000000/long-arrow-right.png");
-  background-repeat: no-repeat;
-  background-position-x: 95%;
-  background-position-y: center;
+  ::-webkit-scrollbar {
+    width: 5px;
+  }
+  
+  ::-webkit-scrollbar-track {
+    background: #f1f1f1; 
+  }
+    
+  ::-webkit-scrollbar-thumb {
+    background: #888; 
+  }
+  
+  ::-webkit-scrollbar-thumb:hover {
+    background: #555; 
+  }
 }
