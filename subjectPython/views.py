@@ -171,3 +171,10 @@ def product_list_by_brand(request, id):
 def product_list_by_category(request, id):
     print(f"id: {id}")
     return render(request, 'product-list.html', {'ss_products': []})
+
+def remove_from_cart(request, product_id):
+    cart = request.session.get('cart', {})
+    if product_id in cart:
+        del cart[product_id]
+        request.session['cart'] = cart
+    return redirect('/cart')
