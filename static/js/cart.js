@@ -92,9 +92,50 @@ async function checkout() {
     }
 }
 
-function onRemoveItemInCart(id) {
+async function onRemoveItemInCart(id) {
     console.log(id)
+    try {
+      const response = await fetch('/remove-item-from-cart/', {
+          method: 'POST',
+          headers: {
+              'Content-Type': 'application/json',
+              'X-CSRFToken': getCartFromCookie('csrftoken')
+          },
+          body: JSON.stringify({
+            product_id: id
+          })
+      });
+
+      const data = await response.json();
+
+      if (data.success) {
+          location.reload();
+      }
+    } catch (error) {
+      console.error(error);
+    }
 }
+
+async function removeAllCart() {
+  try {
+      const response = await fetch('/remove-cart/', {
+          method: 'POST',
+          headers: {
+              'Content-Type': 'application/json',
+              'X-CSRFToken': getCartFromCookie('csrftoken')
+          }
+      });
+
+      const data = await response.json();
+
+      if (data.success) {
+          location.reload();
+      }
+  } catch (error) {
+      console.error(error);
+  }
+}
+
 
 $(document).ready(function () {
     $('input#name, input#phone, input#address, input#country, input#note').on('input', function () {

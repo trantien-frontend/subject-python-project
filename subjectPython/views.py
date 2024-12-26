@@ -172,9 +172,19 @@ def product_list_by_category(request, id):
     print(f"id: {id}")
     return render(request, 'product-list.html', {'ss_products': []})
 
-def remove_from_cart(request, product_id):
-    cart = request.session.get('cart', {})
-    if product_id in cart:
+def remove_item_from_cart(request):
+    if request.method == 'POST':
+      data = json.loads(request.body)
+      product_id = data.get('product_id')
+      cart = request.session.get('cart', {})
+      if product_id in cart:
         del cart[product_id]
         request.session['cart'] = cart
-    return redirect('/cart')
+        return JsonResponse({'success': True, 'message': 'Cart item has been cleared.'})
+    return JsonResponse({'success': False, 'message': 'Invalid request method.'})
+
+def remove_cart(request):
+    if request.method == 'POST':
+        request.session['cart'] = {}
+        return JsonResponse({'success': True, 'message': 'Cart has been cleared.'})
+    return JsonResponse({'success': False, 'message': 'Invalid request method.'})

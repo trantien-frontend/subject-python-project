@@ -33,5 +33,6 @@ urlpatterns = [
     path('header/', views.load_header_data),
     path('brand/product/<int:id>/', views.product_list_by_brand),
     path('category/product/<int:id>/', views.product_list_by_category),
-    path('remove-from-cart/<str:product_id>/', views.remove_from_cart, name='remove_from_cart'),
+    path('remove-item-from-cart/', views.remove_item_from_cart),
+    path('remove-cart/', views.remove_cart),
 ]
