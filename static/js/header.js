@@ -35,5 +35,5 @@ function updateHTML(data) {
             </li>
         `).join('');
     $('#category-list').html(categoryHTML);
-    $('#brand-list').html(categoryHTML);
+    $('#brand-list').html(brandsHTML);
 }

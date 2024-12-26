@@ -31,4 +31,6 @@ urlpatterns = [
     path('add-to-cart/', views.add_to_cart),
     path('order/', views.handle_order),
     path('header/', views.load_header_data),
+    path('brand/product/<int:id>/', views.product_list_by_brand),
+    path('category/product/<int:id>/', views.product_list_by_category),
 ]

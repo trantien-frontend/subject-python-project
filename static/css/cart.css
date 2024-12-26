@@ -85,4 +85,9 @@
     max-height: 100px;
     text-align: start;
   }
+
+  .fa-trash-can {
+    color: #4115f3;
+    cursor: pointer;
+  }
 }

@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load humanize %}
 {% block title %}Home{% endblock %}
 {% block head %}
 <!--swiper-slider-->
@@ -11,45 +12,55 @@
     <!-- hero section-->
     <section class="hero-section">
         <div class="container">
-            <div class="swiper card">
-                <div class="swiper-wrapper">
-                    <!-- Slides -->
-                    <div class="swiper-slide">
-                        <img src="https://laptop88.vn/media/banner/747x350-Lenovo-LOQ-sua-gia.jpg">
+            <div class="d-flex justify-content-between">
+                <div class="swiper card m-0 shadow-lg" style="width: 710px;outline: double 6px #b5b5b5;">
+                    <div class="swiper-wrapper">
+                        <!-- Slides -->
+                        <div class="swiper-slide">
+                            <img src="https://laptop88.vn/media/banner/747x350-Lenovo-LOQ-sua-gia.jpg">
+                        </div>
+                        <div class="swiper-slide">
+                            <img src="https://laptop88.vn/media/banner/747x350-Lenovo-LOQ-sua-gia.jpg">
+                        </div>
+                        <div class="swiper-slide">
+                            <img src="https://laptop88.vn/media/banner/747x350-Lenovo-LOQ-sua-gia.jpg">
+                        </div>
                     </div>
-                    <div class="swiper-slide">
-                        <img src="https://laptop88.vn/media/banner/747x350-Lenovo-LOQ-sua-gia.jpg">
-                    </div>
-                    <div class="swiper-slide">
-                        <img src="https://laptop88.vn/media/banner/747x350-Lenovo-LOQ-sua-gia.jpg">
+                    <div class="swiper-pagination"></div>
+                    <!-- If we need navigation buttons -->
+                    <div class="swiper-button-prev"></div>
+                    <div class="swiper-button-next"></div>
+                    <!-- If we need scrollbar -->
+                    <div class="swiper-scrollbar"></div>
+                </div>
+                <div class="m-0">
+                    <div class="card shadow-lg" style="outline: double 6px #b5b5b5;">
+                        <img src="https://m.media-amazon.com/images/I/61mfYPrK2ZL._AC_UF1000,1000_QL80_.jpg" alt=""
+                            style="width: 290px;  margin: 0; object-fit: contain;">
                     </div>
                 </div>
-                <div class="swiper-pagination"></div>
-                <!-- If we need navigation buttons -->
-                <div class="swiper-button-prev"></div>
-                <div class="swiper-button-next"></div>
-                <!-- If we need scrollbar -->
-                <div class="swiper-scrollbar"></div>
             </div>
         </div>
     </section>
 
-    <div class="container samsung-product mt-5">
-        <h3 class="section-title">Bán Chạy</h3>
+    <div class="container samsung-product mt-4">
+        <h3 class="section-title fw-bold">Giảm Giá</h3>
         <div class="card shadow">
             <div class="row p-3">
                 {% for ss_product in ss_products %}
-                <div class="col-lg-2">
-                    <div class="box box--ss">
+                <div class="col">
+                    <div class="box box--ss h-100 d-flex flex-column shadow">
                         <div class="box-image">
                             <img src="https://cdn.tgdd.vn/Products/Images/42/307174/samsung-galaxy-s24-ultra-grey-thumbnew-600x600.jpg">
                         </div>
-                        <div class="box-content">
-                            <h4 class="box-name">{{ss_product.name}}</h4>
-                            <h5 class="box-price">{{ss_product.price}}</h5>
-                        </div>
-                        <div class="box-button">
-                            <button class="add-to-cart-btn" data-id="{{ ss_product.id }}">Thêm vào giỏ hàng</button>
+                        <div class="d-flex flex-column justify-content-between h-100">
+                            <div class="box-content">
+                                <h4 class="box-name">{{ss_product.name}}</h4>
+                            </div>
+                            <div class="box-button m-0">
+                                <h5 class="box-price">{{ss_product.price|floatformat:0|intcomma}} VNĐ</h5>
+                                <button class="add-to-cart-btn" data-id="{{ ss_product.id }}">Thêm vào giỏ hàng</button>
+                            </div>
                         </div>
                     </div>
                 </div>

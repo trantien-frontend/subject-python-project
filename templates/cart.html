@@ -14,13 +14,13 @@
         </div>
 
         <div class="shadow card m-0">
-            <div class="p-5 w-100">
+            <div class="p-4 w-100">
                 <div class="row">
-                    <div class="col fw-bold d-flex justify-content-center fs-5">Sản Phẩm</div>
+                    <div class="col fw-bold d-flex justify-content-center h-5">Sản Phẩm</div>
                     <div class="col-3"></div>
-                    <div class="col fw-bold fs-5 d-flex justify-content-center">Giá</div>
-                    <div class="col fw-bold fs-5 d-flex justify-content-center">Số Lượng</div>
-                    <div class="col fw-bold fs-5 d-flex justify-content-center">Tổng Tiển</div>
+                    <div class="col fw-bold h-5 d-flex justify-content-center">Giá</div>
+                    <div class="col fw-bold h-5 d-flex justify-content-center">Số Lượng</div>
+                    <div class="col fw-bold h-5 d-flex justify-content-center">Tổng Tiển</div>
                     <div class="col-1"></div>
                 </div>
                 <hr>
@@ -35,7 +35,7 @@
                                 <input id="quantity-{{ forloop.counter }}" class="form-control" min="1" max="10" type="number" value="{{ item.quantity }}" oninput="quantityChange(this, `{{ forloop.counter }}`, `{{ item.price }}`)">
                             </div>
                             <div id="cart-item-total-price-{{ forloop.counter }}" class="cart-item-total-price col d-flex justify-content-center">{{ item.total_price|floatformat:0|intcomma }} VNĐ</div>
-                            <div class="col-1"></div>
+                            <div class="col-1"><a onclick="onRemoveItemInCart(`{{item.product.id}}`)"><i class="fa-solid fa-trash-can"></i></a></div>
                         </div>
                         {% if not forloop.last %}
                             <hr>
@@ -43,14 +43,14 @@
                     {% endfor %}
                 </div>
                 <hr>
-                <div class="float-end fw-bold fs-4">Tổng: <span id="cart-total-price">{{ total_price|floatformat:0|intcomma }}</span> VNĐ</div>
+                <div class="float-end fw-bold h5">Tổng: <span id="cart-total-price">{{ total_price|floatformat:0|intcomma }}</span> VNĐ</div>
             </div>
         </div>
     </div>
 
     <div class="shadow card mx-0" style="margin-top: 50px;width: 28%">
-        <div class="p-5 w-100">
-            <div class="fs-5 fw-bold mt-2">Thông Tin Đặt Hàng</div>
+        <div class="p-4 w-100">
+            <div class="h5 fw-bold mt-2">Thông Tin Đặt Hàng</div>
             <form class="mt-4 justify-content-start" id="checkout-info">
                 <input id="name" name="name" class="form-control mt-3" type="text" placeholder="Họ Và Tên">
                 <input id="phone" name="phone" class="form-control mt-3" placeholder="Số Điện Thoại" oninput="this.value = this.value.replace(/\D+/g, '')">
@@ -59,7 +59,7 @@
                 <hr>
             </form>
             <div class="w-100 cart-info p-4 mt-3">
-                <div class="fs-5 fw-bold">Chi Tiết Thanh Toán</div>
+                <div class="h5 fw-bold">Chi Tiết Thanh Toán</div>
                 <div class="d-flex justify-content-between mt-3 cart-info-item">
                     <div>Thành Tiền</div>
                     <div><span class="cart-total-price">{{ total_price|floatformat:0|intcomma }}</span> VNĐ</div>

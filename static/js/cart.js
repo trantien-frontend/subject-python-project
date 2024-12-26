@@ -92,6 +92,10 @@ async function checkout() {
     }
 }
 
+function onRemoveItemInCart(id) {
+    console.log(id)
+}
+
 $(document).ready(function () {
     $('input#name, input#phone, input#address, input#country, input#note').on('input', function () {
         let disable = false;

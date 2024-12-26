@@ -10,7 +10,7 @@ from .serializers import CategorySerializer, BrandSerializer
 
 # view home_page
 def home_page(request):
-    ss_products = Product.objects.filter(brand=1).order_by('-id')[:6]
+    ss_products = Product.objects.filter(brand=1).order_by('-id')[:5]
     print("Debug ss_products:")
     for product in ss_products:
         print(f"ID: {product.id}, Name: {product.name}, Price: {product.price}")
@@ -161,3 +161,13 @@ def load_header_data(request):
         "categories": category_serializer.data,
         "brands": brand_serializer.data
     })
+
+def product_list_by_brand(request, id):
+    print(f"id: {id}")
+    brand = Brand.objects.get(id=id)
+    print(brand)
+    return render(request, 'product-list.html', {'products': [], 'brand': brand})
+
+def product_list_by_category(request, id):
+    print(f"id: {id}")
+    return render(request, 'product-list.html', {'ss_products': []})
