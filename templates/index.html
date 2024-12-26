@@ -11,7 +11,7 @@
     <!-- hero section-->
     <section class="hero-section">
         <div class="container">
-            <div class="swiper">
+            <div class="swiper card">
                 <div class="swiper-wrapper">
                     <!-- Slides -->
                     <div class="swiper-slide">
@@ -33,11 +33,11 @@
             </div>
         </div>
     </section>
-    <!-- list samsung -->
-    <section class="samsung-product">
-        <h3 class="section-title">SamSung</h3>
-        <div class="container">
-            <div class="row">
+
+    <div class="container samsung-product mt-5">
+        <h3 class="section-title">Bán Chạy</h3>
+        <div class="card shadow">
+            <div class="row p-3">
                 {% for ss_product in ss_products %}
                 <div class="col-lg-2">
                     <div class="box box--ss">
@@ -56,10 +56,11 @@
                 {% endfor %}
             </div>
         </div>
-    </section>
+    </div>
 </div>
 {% endblock %}
 {% block javascript %}
+<script src="{%static 'js/home.js' %}" defer></script>
 <script src="{%static 'js/cart.js' %}" defer></script>
-<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script>
 {% endblock %}

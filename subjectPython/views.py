@@ -4,9 +4,9 @@ from django.contrib.auth.models import User
 from django.http import JsonResponse
 from django.shortcuts import render, redirect
 from django.contrib.auth.hashers import make_password, check_password
-from .models import OrderDetail, Order, Product
+from .models import OrderDetail, Order, Product, Category, Brand
 from django.shortcuts import get_object_or_404
-
+from .serializers import CategorySerializer, BrandSerializer
 
 # view home_page
 def home_page(request):
@@ -149,3 +149,15 @@ def handle_order(request):
         }
 
         return JsonResponse({'data': response_data})
+
+def load_header_data(request):
+    categories = Category.objects.all()
+    brands = Brand.objects.all()
+
+    category_serializer = CategorySerializer(categories, many=True)
+    brand_serializer = BrandSerializer(brands, many=True)
+
+    return JsonResponse({
+        "categories": category_serializer.data,
+        "brands": brand_serializer.data
+    })

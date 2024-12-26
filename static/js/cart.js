@@ -93,7 +93,7 @@ async function checkout() {
 }
 
 $(document).ready(function () {
-    $('input#name, input#phone, input#address, input#country, input#city').on('input', function () {
+    $('input#name, input#phone, input#address, input#country, input#note').on('input', function () {
         let disable = false;
         const cartForms = $('.cart-form');
 
@@ -101,7 +101,7 @@ $(document).ready(function () {
             disable = true;
         }
 
-        $('input#name, input#phone, input#address, input#country, input#city').each(function () {
+        $('input#name, input#phone, input#address, input#country, input#note').each(function () {
             if ($(this).val().trim() === '') {
                 disable = true;
                 return false;

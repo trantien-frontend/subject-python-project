@@ -10,12 +10,12 @@ class Brand(models.Model):
     def __str__(self):
         return self.name
 
-
 class Category(models.Model):
     class Meta:
         db_table = 'category'
 
     name = models.CharField(max_length=255)
+    icon = models.CharField(max_length=255)
 
     def __str__(self):
         return self.name

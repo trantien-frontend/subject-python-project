@@ -16,7 +16,7 @@
     font-size: 12px;
   }
 
-  input::placeholder {
+  input::placeholder, textarea::placeholder {
     font-size: 12px;
     opacity: 0.5;
   }
@@ -78,5 +78,11 @@
   
   ::-webkit-scrollbar-thumb:hover {
     background: #555; 
+  }
+
+  .note {
+    min-height: 90px;
+    max-height: 100px;
+    text-align: start;
   }
 }

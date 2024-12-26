@@ -1,34 +1,43 @@
-<header class="shadow-sm">
+<header class="shadow fixed-top">
     <div class="container">
         <nav class="navbar navbar-expand-lg">
-            <a class="navbar-brand" href="/">LOGO</a>
+            <div class="logo"><a href="/"><img src="data:image/png;base64,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" alt=""></a></div>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
                     aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
+            <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+                <div class="nav-item search-box">
+                    <input type="text" name="search" placeholder="Bạn tìm gì ...">
+                </div>
                 <ul class="navbar-nav">
                     <li class="nav-item">
                         {% if request.user.is_authenticated %}
-                        <a class="nav-link">
+                        <a class="nav-link link">
                             <i class="fa-solid fa-user"></i>
                             {{request.user.email}}
                         </a>
                         {% else %}
-                        <a class="nav-link login-button">
+                        <a class="nav-link login-button link">
                             <i class="fa-solid fa-user"></i>
                             Đăng nhập
                         </a>
                         {% endif %}
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/cart">
+                        <a class="nav-link link" href="/cart">
                             <i class="fa-solid fa-cart-shopping"></i>
                             Giỏ hàng
                         </a>
 
                     </li>
                 </ul>
+            </div>
+        </nav>
+        <nav class="navbar navbar-expand-lg justify-content-start">
+            <div class="collapse navbar-collapse justify-content-center">
+                <ul id="category-list" class="navbar-nav"></ul>
+                <ul id="brand-list" class="navbar-nav"></ul>
             </div>
         </nav>
     </div>

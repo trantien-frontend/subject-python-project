@@ -13,18 +13,27 @@ a {
 }
 
 html {
-    font-size: 62.5%;
+    font-size: 15px;
 }
 
 h1 {
     color: #fd8a8a;
 }
 
+.container {
+    width: 72vw !important;
+}
+
 body {
-    font-size: 12px;
+    font-size: 16px;
     font-family: Arial, sans-serif;
     color: var(--text);
     background-color: var(--background-color);
+}
+
+.body-container {
+    margin-top: 170px;
+    margin-bottom: 70px;
 }
 
 img {
@@ -39,10 +48,8 @@ img {
     --background-color: #eff3f6
 }
 
-.navbar {
-    .navbar-brand {
-        color: red;
-    }
+.logo img {
+    width: 215px;
 }
 
 .swiper {
@@ -56,8 +63,6 @@ img {
 
 .section-title {
     font-size: 3rem;
-    text-align: center;
-    text-transform: uppercase;
 }
 
 .box:hover {
@@ -72,6 +77,7 @@ img {
     padding: 2rem;
     border-radius: 15px;
     border: 1px solid #eaecf0;
+    background-color: #fdfdfd;
 
     .box-image {
         img {
@@ -110,13 +116,13 @@ img {
             border: none;
             padding: 5px 0;
             font-weight: bold;
+            font-size: 15px;
         }
     }
 }
 
 nav {
     .navbar-collapse {
-        justify-content: flex-end;
         ul {
             margin: 0 !important;
         }
@@ -142,7 +148,7 @@ nav {
 #login-form {
     background: white;
     padding: 2rem;
-    width: 350px;
+    width: 400px;
 }
 
 .form-header {
@@ -177,6 +183,11 @@ header {
     background-color: #fff;
 }
 
+footer {
+    background-color: #fff;
+    height: 40px;
+}
+
 .page-title {
     font-size: 21px;
 }
@@ -185,4 +196,34 @@ hr {
     color: #79797a;
     opacity: 0.15;
     border-top: 1.6px solid;
+}
+
+.link {
+    cursor: pointer;
+
+    &:hover {
+        text-decoration: underline;
+    }
+}
+
+.search-box {
+    margin: 0 40px 0 0;
+    width: 250px;
+    input[type=text] {
+        width: 100%;
+        box-sizing: border-box;
+        border: 2px solid #393939;
+        border-radius: 25px;
+        font-size: 16px;
+        background-color: white;
+        background-image: url('/static/img/search.svg');
+        opacity : 0.7;
+        background-position: 17px 15px; 
+        background-repeat: no-repeat;
+        padding: 12px 20px 12px 50px;
+    }
+}
+
+.category {
+    margin-right: 25px !important;
 }
