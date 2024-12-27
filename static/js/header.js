@@ -3,6 +3,11 @@ var brands
 
 (() => {
     loadData()
+    const urlParams = new URLSearchParams(window.location.search);
+    const key = urlParams.get('key')
+    if (key && key.trim() != '') {
+        $("#search-input").val(key);
+    }
 })()
 
 async function loadData() {
@@ -19,7 +24,7 @@ function updateHTML(data) {
     categoryHTML = data.categories
         .map(item => `
             <li class="nav-item category">
-                <a class="nav-link login-button link">
+                <a class="nav-link login-button link" href="/category/${item.id}">
                     <i class="fa-solid ${item.icon}"></i>
                     ${item.name}
                 </a>
@@ -28,7 +33,7 @@ function updateHTML(data) {
     brandsHTML = data.brands
         .map(item => `
             <li class="nav-item category">
-                <a class="nav-link login-button link">
+                <a class="nav-link login-button link" href="/brand/${item.id}">
                     <i class="fa-solid fa-mobile-screen"></i>
                     ${item.name}
                 </a>
@@ -37,3 +42,13 @@ function updateHTML(data) {
     $('#category-list').html(categoryHTML);
     $('#brand-list').html(brandsHTML);
 }
+
+$("#search-input").keyup(function(event) {
+    if (event.keyCode === 13) {
+        key = $("#search-input").val();
+
+        if (key.trim() == '') return;
+
+        window.location.href = `/products/search?key=${encodeURIComponent(key)}`;
+    }
+});

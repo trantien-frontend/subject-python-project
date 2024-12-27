@@ -39,7 +39,7 @@
     border-radius: 10px;
     height: 35px;
     font-weight: 700;
-    font-size: 15px;
+    font-size: 12px;
   }
 
   .cart-info-item div {
@@ -48,7 +48,8 @@
 
   .quantity{
     input {
-      width: 45px;
+      width: 60px;
+      height: 40px;
       text-align: center;
       border-color: #c6c5c5;
     }

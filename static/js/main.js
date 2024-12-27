@@ -29,25 +29,40 @@ const ajaxLoginForm = () => {
         const formLogin = document.querySelector("#login-form");
         const email = formLogin.querySelector("#input-email");
         const password = formLogin.querySelector("#input-password");
+        const path = window.location.pathname + window.location.search;;
         if (!formLogin) return;
 
         formLogin.addEventListener('submit', async (e) => {
             e.preventDefault();
             const url = "/login/"
             const formData = new FormData(formLogin);
+            formData.append('currentURL', path);
 
             const res = await fetch(url, {
                 method: "POST", body: formData
             });
 
-            const {email: emailErrorMess, password: passwordErrorMess, url: currentURL} = JSON.parse(await res.text());
+            const {email: emailErrorMess, password: passwordErrorMess, currentURL: currentURL, message: message, success: success} = JSON.parse(await res.text());
             if (emailErrorMess) email.nextElementSibling.textContent = emailErrorMess;
             if (passwordErrorMess) password.nextElementSibling.innerHTML = passwordErrorMess;
-            if (currentURL) {
-                window.location.href = currentURL;
+            if (success && currentURL) {
+                showToast(message).then((_) => {
+                    window.location.href = currentURL;
+                })
             }
         })
     }
+}
+
+async function logout() {
+    document.cookie.replace(
+        /(?<=^|;).+?(?=\=|;|$)/g,
+        name => location.hostname
+            .split(/\.(?=[^\.]+\.)/)
+            .reduceRight((acc, val, i, arr) => i ? arr[i]='.'+val+acc : (arr[i]='', arr), '')
+            .map(domain => document.cookie=`${name}=;max-age=0;path=/;domain=${domain}`)
+    );
+    location.reload();
 }
 
 (() => {

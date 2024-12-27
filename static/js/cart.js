@@ -1,36 +1,57 @@
 (() => {
-    initializeAddToCartButtons();
+
 })()
 
-function initializeAddToCartButtons() {
-    const addToCartButtons = document.querySelectorAll('.add-to-cart-btn');
+function initializeAddToCartButtons(id, isLogin = 'True') {
+    if (isLogin === 'False') {
+        loginRequired();
+        return;
+    } else {
+        handleAddToCart(id);
+    }
+}
 
-    addToCartButtons.forEach(button => {
-        button.addEventListener('click', function () {
-            const productId = this.getAttribute('data-id');
+function handleAddToCart(productId) {
+    fetch('/add-to-cart/', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+            'X-CSRFToken': getCartFromCookie('csrftoken')
+        },
+        body: new URLSearchParams({
+            product_id: productId
+        })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            showToast(data.message)
+        } else {
+            loginRequired();
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+    });
+}
 
-            fetch('/add-to-cart/', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded',
-                    'X-CSRFToken': getCartFromCookie('csrftoken')
-                },
-                body: new URLSearchParams({
-                    product_id: productId
-                })
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    alert(data.message);
-                } else {
-                    alert(data.message);
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-            });
-        });
+function loginRequired() {
+    Swal.fire({
+        title: "Bạn chưa đăng nhập",
+        text: "Bạn cần phải đăng nhập để tiếp tục!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Đăng Nhập",
+        cancelButtonText: "Thoát",
+    }).then((result) => {
+        if (result.isConfirmed) {
+            const loginButton = document.querySelector(".login-button");
+            loginButton.click();
+        } else {
+            return;
+        }
     });
 }
 
@@ -57,12 +78,36 @@ function quantityChange(input, number, product) {
 
     $(`#cart-item-total-price-${number}`).text(`${(Number(product) * Number(input.value)).toLocaleString()} VNĐ`);
 
-    $('.cart-item-total-price').each(() => {
+    $('.cart-item-total-price').each(function () {
         let itemTotalPrice = parseInt($(this).text().replace(/[^\d]/g, ''));
-        totalCartPrice += itemTotalPrice;
+        totalCartPrice += Number(itemTotalPrice);
     });
+
     $('#cart-total-price').text(`${totalCartPrice.toLocaleString()}`);
     $('.cart-total-price').text(`${totalCartPrice.toLocaleString()}`);
+}
+
+function onCheckoutClicked(isLogin) {
+    if (isLogin === 'False') {
+        Swal.fire({
+            title: "Bạn chưa đăng nhập",
+            text: "Bạn cần phải đăng nhập để tiếp tục đặt hàng!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Đăng Nhập",
+            cancelButtonText: "Thoát",
+        }).then((result) => {
+            if (!result.isConfirmed) {
+                checkout();
+            } else {
+                return;
+            }
+        });
+    } else {
+        checkout();
+    }
 }
 
 async function checkout() {
@@ -88,7 +133,9 @@ async function checkout() {
     const data = await res.json();
 
     if (data.success) {
-        console.log(data.mess)
+        showToast(data.message).then((_) => {
+            removeAllCart();
+        })
     }
 }
 
@@ -135,7 +182,6 @@ async function removeAllCart() {
       console.error(error);
   }
 }
-
 
 $(document).ready(function () {
     $('input#name, input#phone, input#address, input#country, input#note').on('input', function () {

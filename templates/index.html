@@ -13,7 +13,7 @@
     <section class="hero-section">
         <div class="container">
             <div class="d-flex justify-content-between">
-                <div class="swiper card m-0 shadow-lg" style="width: 710px;outline: double 6px #b5b5b5;">
+                <div class="swiper card m-0 shadow-lg" style="width: 837px;outline: double 6px #b5b5b5;">
                     <div class="swiper-wrapper">
                         <!-- Slides -->
                         <div class="swiper-slide">
@@ -36,7 +36,7 @@
                 <div class="m-0">
                     <div class="card shadow-lg" style="outline: double 6px #b5b5b5;">
                         <img src="https://m.media-amazon.com/images/I/61mfYPrK2ZL._AC_UF1000,1000_QL80_.jpg" alt=""
-                            style="width: 290px;  margin: 0; object-fit: contain;">
+                            style="width: 305px;  margin: 0; object-fit: contain;">
                     </div>
                 </div>
             </div>
@@ -59,7 +59,7 @@
                             </div>
                             <div class="box-button m-0">
                                 <h5 class="box-price">{{ss_product.price|floatformat:0|intcomma}} VNĐ</h5>
-                                <button class="add-to-cart-btn" data-id="{{ ss_product.id }}">Thêm vào giỏ hàng</button>
+                                <button class="add-to-cart-btn" onclick="initializeAddToCartButtons(`{{ ss_product.id }}`, `{{ request.user.is_authenticated }}`)">Thêm vào giỏ hàng</button>
                             </div>
                         </div>
                     </div>

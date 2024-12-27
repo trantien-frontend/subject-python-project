@@ -3,17 +3,15 @@ from django.contrib.auth import login
 from django.contrib.auth.models import User
 from django.http import JsonResponse
 from django.shortcuts import render, redirect
-from django.contrib.auth.hashers import make_password, check_password
+from django.contrib.auth.hashers import check_password
 from .models import OrderDetail, Order, Product, Category, Brand
 from django.shortcuts import get_object_or_404
-from .serializers import CategorySerializer, BrandSerializer
+from .serializers import CategorySerializer, BrandSerializer, ProductSerializer
+from django.views.decorators.csrf import csrf_exempt
 
 # view home_page
 def home_page(request):
-    ss_products = Product.objects.filter(brand=1).order_by('-id')[:5]
-    print("Debug ss_products:")
-    for product in ss_products:
-        print(f"ID: {product.id}, Name: {product.name}, Price: {product.price}")
+    ss_products = Product.objects.all().order_by('-id')[:5]
     return render(request, 'index.html', {"ss_products": ss_products})
 
 def cart_page(request):
@@ -49,12 +47,13 @@ def handle_login(request):
     if request.method == "POST":
         email = request.POST['email']
         password = request.POST['password']
+        currentURL = request.POST['currentURL']
         try:
             user = User.objects.get(email=email)
             if check_password(password, user.password):
                 login(request, user)
                 print("Login Successful")
-                return JsonResponse({"success": True, "url": "/"})
+                return JsonResponse({"success": True, "url": "/", "message": "Đăng Nhập Thành Công", "currentURL": currentURL})
             else:
                 print("Invalid password")
                 return JsonResponse({"success": False, "email": "Mật khẩu không đúng"})
@@ -70,24 +69,26 @@ def product_page(request):
 def product_detail_page(request):
     return render(request, 'product-details.html')
 
+@csrf_exempt
 def add_to_cart(request):
     if request.method == 'POST':
-        product_id = request.POST.get('product_id')
-        if not product_id:
-            return JsonResponse({'success': False, 'message': 'Invalid product ID.'})
+        if request.user.is_authenticated:
+            product_id = request.POST.get('product_id')
+            if not product_id:
+                return JsonResponse({'success': False, 'message': 'Invalid product ID.'})
 
-        cart = request.session.get('cart', {})
+            cart = request.session.get('cart', {})
 
-        if product_id in cart:
-            cart[product_id] += 1
+            if product_id in cart:
+                cart[product_id] += 1
+            else:
+                cart[product_id] = 1
+
+            request.session['cart'] = cart
+
+            return JsonResponse({'success': True, 'message': 'Product added to cart.'})
         else:
-            cart[product_id] = 1
-
-        request.session['cart'] = cart
-
-        print("Giỏ hàng hiện tại:", cart)
-
-        return JsonResponse({'success': True, 'message': 'Product added to cart.'})
+            return JsonResponse({'success': False, 'message': 'Login required'})
 
     return JsonResponse({'success': False, 'message': 'Invalid request method.'})
 
@@ -148,7 +149,7 @@ def handle_order(request):
             "details": [{"product_id": detail.product_id, "quantity": detail.quantity} for detail in order.details.all()]
         }
 
-        return JsonResponse({'data': response_data})
+        return JsonResponse({'data': response_data, 'success': True, 'message': 'Đặt Hàng Thành Công'})
 
 def load_header_data(request):
     categories = Category.objects.all()
@@ -163,14 +164,32 @@ def load_header_data(request):
     })
 
 def product_list_by_brand(request, id):
-    print(f"id: {id}")
     brand = Brand.objects.get(id=id)
-    print(brand)
-    return render(request, 'product-list.html', {'products': [], 'brand': brand})
+    return render(request, 'product-list.html', {'title': brand.name})
+
+def get_product_list_by_brand_id(request, id):
+    products = Product.objects.filter(brand_id=id)
+    products_serializer = ProductSerializer(products, many=True)
+    return JsonResponse({'products': products_serializer.data})
 
 def product_list_by_category(request, id):
-    print(f"id: {id}")
-    return render(request, 'product-list.html', {'ss_products': []})
+    category = Category.objects.get(id=id)
+    return render(request, 'product-list.html', {'title': category.name})
+
+def get_product_list_by_category_id(request, id):
+    products = Product.objects.filter(category_id=id)
+    products_serializer = ProductSerializer(products, many=True)
+    return JsonResponse({'products': products_serializer.data})
+
+def product_list_by_search_key(request):
+    search_key = request.GET.get('key', '')
+    return render(request, 'product-list.html', {'title': f'Tìm Kiếm Với Từ Khóa \'{search_key}\''})
+
+def get_product_list_by_search_key(request):
+    search_key = request.GET.get('key', '')
+    products = Product.objects.filter(name__icontains=search_key)
+    products_serializer = ProductSerializer(products, many=True)
+    return JsonResponse({'products': products_serializer.data})
 
 def remove_item_from_cart(request):
     if request.method == 'POST':

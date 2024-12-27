@@ -40,14 +40,13 @@ const handleRegister = () => {
             method: "POST", body: formData
         });
         const data = await res.json();
-        console.log(data)
         if (data.success) {
             registerForm.reset();
             registerForm.querySelectorAll(".form-error").forEach(i => i.textContent = "");
             Toastify({
                 text: data.mess,
-                backgroundColor: "green", // Màu nền hoặc bất kỳ giá trị CSS hợp lệ nào
-                duration: 3000, // Thời gian hiển thị
+                backgroundColor: "green",
+                duration: 3000,
             }).showToast();
         }
 
