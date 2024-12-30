@@ -25,7 +25,7 @@ function updateHTML(data) {
         .map(item => `
             <li class="nav-item category">
                 <a class="nav-link login-button link" href="/category/${item.id}">
-                    <i class="fa-solid ${item.icon}"></i>
+                    <i class="fa-solid fa-mobile-screen"></i>
                     ${item.name}
                 </a>
             </li>
