@@ -86,9 +86,9 @@ def add_to_cart(request):
 
             request.session['cart'] = cart
 
-            return JsonResponse({'success': True, 'message': 'Product added to cart.'})
+            return JsonResponse({'success': True, 'message': 'Sản phẩm đã được thêm vào giỏ hàng.'})
         else:
-            return JsonResponse({'success': False, 'message': 'Login required'})
+            return JsonResponse({'success': False, 'message': 'Bạn cần đăng nhập.'})
 
     return JsonResponse({'success': False, 'message': 'Invalid request method.'})
 
