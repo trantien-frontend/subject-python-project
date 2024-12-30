@@ -25,7 +25,7 @@ function updateHTML(data) {
         .map(item => `
             <li class="nav-item category">
                 <a class="nav-link login-button link" href="/category/${item.id}">
-                    <i class="fa-solid fa-mobile-screen"></i>
+                    <i class="fa-solid ${getIconByName(item.name)}"></i>
                     ${item.name}
                 </a>
             </li>
@@ -52,3 +52,17 @@ $("#search-input").keyup(function(event) {
         window.location.href = `/products/search?key=${encodeURIComponent(key)}`;
     }
 });
+
+function getIconByName(name) {
+  console.log("name", name)
+  switch (name) {
+    case "Đồ điện tử":
+      return "fa-hard-drive"
+    case "TV":
+      return "fa-tv"
+    case "Điện Thoại":
+      return "fa-mobile-screen-button"
+    case "Thiết Bị Gia Dụng":
+      return "fa-blender-phone"
+  }
+}
