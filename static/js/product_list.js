@@ -43,7 +43,7 @@ function getHTMLTemplate(product) {
     return `<div class="col-3">
                 <div class="box box--ss h-100 d-flex flex-column shadow">
                     <div class="box-image">
-                        <img src="https://cdn.tgdd.vn/Products/Images/42/307174/samsung-galaxy-s24-ultra-grey-thumbnew-600x600.jpg">
+                        <img src="/static/img/${product.image}">
                     </div>
                     <div class="d-flex flex-column justify-content-between h-100">
                         <div class="box-content">
