@@ -19,18 +19,19 @@ class Category(models.Model):
     def __str__(self):
         return self.name
 
-
 class Product(models.Model):
     class Meta:
         db_table = 'product'
 
-    name = models.CharField(max_length=255, null=True, blank=True)
-    image = models.CharField(max_length=50, null=True, blank=True)
-    description = models.CharField(max_length=500, null=True, blank=True)
-    price = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
-    stock_quantity = models.IntegerField(null=True, blank=True)
-    created_at = models.DateTimeField(null=True, blank=True)
-    updated_at = models.DateTimeField(null=True, blank=True)
+    name = models.CharField(max_length=255)
+    image = models.ImageField(upload_to='media/')
+    brand = models.ForeignKey('Brand', on_delete=models.CASCADE)
+    category = models.ForeignKey('Category', on_delete=models.CASCADE)
+    description = models.TextField(max_length=500, blank=True, null=True)
+    price = models.DecimalField(max_digits=10, decimal_places=2)
+    stock_quantity = models.PositiveIntegerField()
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
 
     brand = models.ForeignKey(Brand, on_delete=models.SET_NULL, null=True, blank=True)
     category = models.ForeignKey(Category, on_delete=models.SET_NULL, null=True, blank=True)
@@ -60,3 +61,5 @@ class OrderDetail(models.Model):
 
     def __str__(self):
         return f"Detail {self.id} for Order {self.order.id}"
+    def __str__(self):
+        return self.name

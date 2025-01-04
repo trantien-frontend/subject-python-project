@@ -1,0 +1,91 @@
+<form class="crud-form col-lg-3 p-5 bg-secondary-subtle border border-primary rounded-top">
+    {% csrf_token %}
+    <div class="form-header">
+        {% if page == "users" %}
+        <h3 class="form-header-title">Thêm khách hàng</h3>
+        {% endif %}
+        {% if page == "products" %}
+        <h3 class="form-header-title">Thêm sản phẩm</h3>
+        {% endif %}
+        {% if page == "orders" %}
+        <h3 class="form-header-title"></h3>
+        {% endif %}
+        <span class="close-button">
+            <i class="fa-solid fa-x"></i>
+        </span>
+    </div>
+    <div class="form-body">
+        {% if page == "users" %}
+        <div class="mb-3">
+            <label for="input-firstName" class="form-label">Mã khách hàng<span
+                    class="text-danger">*</span></label>
+            <input type="text" readonly class="form-control p-2" id="input-id" name="id">
+            <span class="form-error text-danger"></span>
+        </div>
+        <div class="mb-3">
+            <label for="input-firstName" class="form-label">Họ<span
+                    class="text-danger">*</span></label>
+            <input type="text" class="form-control p-2" id="input-lastname" name="lastname">
+            <span class="form-error text-danger"></span>
+        </div>
+        <div class="mb-3">
+            <label for="input-firstName" class="form-label">Tên<span
+                    class="text-danger">*</span></label>
+            <input type="text" class="form-control p-2" id="input-firstname" name="firstname">
+            <span class="form-error text-danger"></span>
+        </div>
+        <div class="mb-3">
+            <label for="input-firstName" class="form-label">Email<span
+                    class="text-danger">*</span></label>
+            <input type="text" class="form-control p-2" id="input-email" name="email">
+            <span class="form-error text-danger"></span>
+        </div>
+        <div class="mb-3 form-check">
+            <input type="checkbox" class="form-check-input" id="status" name="status" value="True">
+            <label class="form-check-label" for="status">Trạng thái hoạt động</label>
+        </div>
+    </div>
+    {% endif %}
+    {% if page == "products" %}
+    <div class="mb-3">
+        <label for="input-firstName" class="form-label">Mã sản phẩm<span
+                class="text-danger">*</span></label>
+        <input type="text" readonly class="form-control p-2" id="input-id" name="id">
+        <span class="form-error text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label for="input-firstName" class="form-label">Tên sản phẩm<span
+                class="text-danger">*</span></label>
+        <input type="text" class="form-control p-2" id="input-name" name="name">
+        <span class="form-error text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <select class="form-select" id="brand" name="brand">
+            <option value="1">Samsung</option>
+            <option value="2">Apple</option>
+            <option value="3">LG</option>
+            <option value="4">Sony</option>
+        </select>
+    </div>
+    <div class="mb-3">
+        <select class="form-select" id="category" name="category">
+            <option value="1">Đồ điện tử</option>
+            <option value="2">TV</option>
+            <option value="3">Điện Thoại</option>
+            <option value="4">Thiết Bị Gia Dụng</option>
+        </select>
+    </div>
+    <div class="mb-3">
+        <label for="image" class="form-label">Default file input example</label>
+        <input class="form-control" type="file" id="image" name="image">
+    </div>
+    <div class="input-group mb-3">
+        <span class="input-group-text">VND</span>
+        <input type="text" class="form-control" id="input-price" name="price">
+        <span class="input-group-text">.00</span>
+    </div>
+    {% endif %}
+    <div class="form-footer">
+        <button type="submit" class="btn btn-success">Submit</button>
+    </div>
+</form>
