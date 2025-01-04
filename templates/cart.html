@@ -1,0 +1,93 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load humanize %}
+{% block title %}Cart{% endblock %}
+{% block head %}
+  <link rel="stylesheet" href="{% static 'css/cart.css' %}">
+{% endblock %}
+{% block content %}
+
+<div class="cart-container container d-flex justify-content-between p-0">
+    <div style="width: calc(79% - 3rem);">
+        <div class="fw-bold page-title mb-4">
+            Giỏ Hàng
+        </div>
+
+        <div class="shadow card m-0">
+            <div class="p-4 w-100">
+                <div class="row">
+                    <div class="col fw-bold d-flex justify-content-center h-5">Sản Phẩm</div>
+                    <div class="col-3"></div>
+                    <div class="col fw-bold h-5 d-flex justify-content-center">Giá</div>
+                    <div class="col fw-bold h-5 d-flex justify-content-center">Số Lượng</div>
+                    <div class="col fw-bold h-5 d-flex justify-content-center">Tổng Tiển</div>
+                    <div class="col-1"></div>
+                </div>
+                <hr>
+                <div class="cart-items">
+                    {% for item in cart_items %}
+                        <input type="text" class="cart-form d-none" value="{{ item.product.id }}">
+                        <div id="cart-item-{{ item.product.id }}" class="row align-items-center">
+                            <div class="col"><img class="img" src="/static/img/{{item.product.image}}"></div>
+                            <div class="col-3">{{ item.product.name }}</div>
+                            <div class="col d-flex justify-content-center">{{ item.product.price|floatformat:0|intcomma }} VNĐ</div>
+                            <div class="col d-flex justify-content-center quantity">
+                                <input id="quantity-{{ forloop.counter }}" class="form-control" min="1" max="10" type="number" value="{{ item.quantity }}" oninput="quantityChange(this, `{{ forloop.counter }}`, `{{ item.price }}`)">
+                            </div>
+                            <div id="cart-item-total-price-{{ forloop.counter }}" class="cart-item-total-price col d-flex justify-content-center">{{ item.total_price|floatformat:0|intcomma }} VNĐ</div>
+                            <div class="col-1"><a onclick="onRemoveItemInCart(`{{item.product.id}}`)"><i class="fa-solid fa-trash-can"></i></a></div>
+                        </div>
+                        {% if not forloop.last %}
+                            <hr>
+                        {% endif %}
+                    {% endfor %}
+                    {% if cart_items|length == 0 %}
+                        <img src="/static/img/cart-empty.png" alt="" style="width: 200px;">
+                    {% endif %}
+                </div>
+                <hr>
+                <div class="float-end fw-bold h5">Tổng: <span id="cart-total-price">{{ total_price|floatformat:0|intcomma }}</span> VNĐ</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="shadow card mx-0" style="width: 23%; margin: 0;font-size: 12px;">
+        <div class="p-4 w-100">
+            <div class="h6 fw-bold mt-2">Thông Tin Đặt Hàng</div>
+            <form class="mt-4 justify-content-start" id="checkout-info">
+                <input id="name" name="name" class="form-control mt-3" type="text" placeholder="Họ Và Tên">
+                <input id="phone" name="phone" class="form-control mt-3" placeholder="Số Điện Thoại" oninput="this.value = this.value.replace(/\D+/g, '')">
+                <input id="address" name="address" class="form-control mt-3" type="text" placeholder="Địa Chỉ">
+                <textarea id="note" name="note" class="form-control mt-3 note" placeholder="Ghi Chú"></textarea>
+                <hr>
+            </form>
+            <div class="w-100 cart-info p-4 mt-3">
+                <div class="h6 fw-bold">Chi Tiết Thanh Toán</div>
+                <div class="d-flex justify-content-between mt-3 cart-info-item">
+                    <div>Thành Tiền</div>
+                    <div><span class="cart-total-price">{{ total_price|floatformat:0|intcomma }}</span> VNĐ</div>
+                </div>
+                <div class="d-flex justify-content-between cart-info-item">
+                    <div>Phí Ship</div>
+                    <div>50,000 VNĐ</div>
+                </div>
+                <div class="d-flex justify-content-between cart-info-item">
+                    <div>Giảm Giá</div>
+                    <div class="text-decoration-line-through">-50000 VNĐ</div>
+                </div>
+                <hr>
+                <div class="d-flex justify-content-between fw-bold cart-info-item">
+                    <div>Tổng Tiền</div>
+                    <div><span class="cart-total-price">{{ total_price|floatformat:0|intcomma }}</span> VNĐ</div>
+                </div>
+                <button class="btn btn-light mt-4 w-100 check-out" onclick="onCheckoutClicked(`{{ request.user.is_authenticated }}`)" disabled="true">Đặt Hàng</button>
+                <button class="btn btn-light mt-2 w-100 check-out" onclick="removeAllCart()">Xóa Giỏ Hàng</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+{% block javascript %}
+    <script src="{% static 'js/cart.js' %}" defer></script>
+{% endblock %}

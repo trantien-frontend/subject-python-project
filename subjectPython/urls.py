@@ -27,4 +27,16 @@ urlpatterns = [
     path("login/", views.handle_login),
     path("register-form/", views.register_form),
     path("register/",views.handle_register),
+    path("cart/",views.cart),
+    path('add-to-cart/', views.add_to_cart),
+    path('order/', views.handle_order),
+    path('header/', views.load_header_data),
+    path('brand/<int:id>/', views.product_list_by_brand),
+    path('category/<int:id>/', views.product_list_by_category),
+    path('remove-item-from-cart/', views.remove_item_from_cart),
+    path('remove-cart/', views.remove_cart),
+    path('brand/<int:id>/products/', views.get_product_list_by_brand_id),
+    path('category/<int:id>/products/', views.get_product_list_by_category_id),
+    path('products/search/', views.product_list_by_search_key),
+    path('api/products/search/', views.get_product_list_by_search_key)
 ]
