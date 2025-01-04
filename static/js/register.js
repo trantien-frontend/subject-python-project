@@ -43,6 +43,7 @@ const handleRegister = () => {
         if (data.success) {
             registerForm.reset();
             registerForm.querySelectorAll(".form-error").forEach(i => i.textContent = "");
+            window.location.href = data.redirect_url;
             Toastify({
                 text: data.mess,
                 backgroundColor: "green",

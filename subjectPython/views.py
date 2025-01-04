@@ -35,7 +35,8 @@ def handle_register(request):
             return JsonResponse({"success": False, "email": "Email đã tồn tại."})
         user = User.objects.create_user(username=email, email=email, password=password, first_name=first_name,
                                         last_name=last_name)
-    return JsonResponse({"success": True, "mess": "Đăng ký thành công"})
+        return JsonResponse({"success": True, "mess": "Đăng ký thành công", "redirect_url": "/"})
+    return JsonResponse({"success": False, "mess": "Đây không phải yêu cầu POST."})
 
 
 # view login_form
