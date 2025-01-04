@@ -1,0 +1,108 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Dashboard{% endblock %}
+{% block head %}{% endblock %}
+{% block content %}
+
+<section class="dashboard">
+    <div class="container-fluid">
+        <div class="dashboard-wrapper">
+            <div class="row">
+                <div class="col-lg-2">
+                    <div class="sidebar">
+                        <h1>Trang Admin</h1>
+                        <ul class="categories">
+                            <li>
+                                <a href="?page=index&current_page=1" class="{% if page == 'index' %}active{% endif %}">
+                                    <i class="fa-solid fa-house"></i>
+                                    Trang chủ
+                                </a>
+                            </li>
+                            <li>
+                                <a href="?page=users" class="{% if page == 'users' %}active{% endif %}">
+                                    <i class="fa-solid fa-user"></i>
+                                    Người dùng
+                                </a>
+                            </li>
+                            <li>
+                                <a href="?page=products"
+                                   class="{% if page == 'products' %}active{% endif %}">
+                                    <i class="fa-brands fa-product-hunt"></i>
+                                    Sản phẩm
+                                </a>
+                            </li>
+                            <li>
+                                <a href="?page=orders"
+                                   class="{% if page == 'orders' %}active{% endif %}">
+                                    <i class="fa-solid fa-cart-shopping"></i>
+                                    Đơn đặt hàng
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-10">
+                    <div class="content">
+                        <div class="content-header">
+                            <div class="row">
+                                <div class="text-start col-lg-5">
+                                    <span class="fs-2"><i class="fa-solid fa-bars"></i></span>
+                                </div>
+                                <div class="text-end fs-5 col-lg-5">
+                                    <span>Xin chào, Tiếm Phạm</span>
+                                    <span class="button-logout"><i class="fa-solid fa-right-from-bracket"></i></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="content-body">
+                            {% if page == "index" %}
+                            {% include 'dashboard-index.html' %}
+                            {% endif %}
+                            {% if page == "users" %}
+                            <div class="py-3">
+                                <button type="button" id="add" class="btn btn-success">Thêm tài khoản</button>
+                            </div>
+                            {% include 'users.html' with columns=cols data=data page=page %}
+                            {% endif %}
+                            {% if page == "products" %}
+                            <div class="py-3">
+                                <button type="button" id="add" class="btn btn-success">Thêm sản phẩm</button>
+                            </div>
+                            <div class="product-section">
+                                {% include 'table.html' with columns=cols data=data page=page %}
+                            </div>
+                            {% endif %}
+                            {% if page == "orders" %}
+                            {% include 'orders.html' with columns=cols data=data page=page %}
+                            {% endif %}
+                            {% if not page == "index" %}
+                            <div class="content-pagination">
+                                <nav aria-label="Page navigation example">
+                                    <ul class="pagination pagination-lg">
+                                        {% for current_page in total_page %}
+                                        <li class="page-item">
+                                            {% if current_page == 1 %}
+                                            <a class="page-link active" data-page="{{ current_page }}" href="#">{{current_page}}</a>
+                                            {% elif current_page %}
+                                            <a class="page-link" data-page="{{ current_page }}" href="#">{{current_page}}</a>
+                                            {% endif %}
+                                        </li>
+                                        {% endfor %}
+                                    </ul>
+                                </nav>
+                            </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<div class="popup">
+    {% include 'crud-form.html' with page=page %}
+</div>
+{% endblock %}
+{% block javascript%}
+<script src="{%static 'js/admin.js' %}" defer></script>
+{% endblock %}
