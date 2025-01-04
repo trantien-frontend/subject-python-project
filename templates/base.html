@@ -24,14 +24,16 @@
 <body>
 
 {% if not is_default_header %}
-<div class="popup"></div>
-{% include 'header.html' %}
-<div class="body-container">
-      {% block content %}{% endblock %}
-</div>
+  <div class="popup"></div>
+  {% include 'header.html' %}
 {% endif %}
-{% block content %}{% endblock %}
-{% block javascript%}{% endblock %}
+<div class="body-container">
+  {% block content %}
+  {% endblock %}
+</div>
+{% block javascript %}
+{% endblock %}
+
 <script src="{%static 'js/main.js' %}" defer></script>
 <script src="{%static 'js/header.js' %}" defer></script>
 <script src="{%static 'js/utils.js' %}" defer></script>
